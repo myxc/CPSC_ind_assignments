@@ -45,6 +45,9 @@ public abstract class Car
         return fuelLevel;
     }
 
+    /** Constructor: initilize the appearance and fuel level
+     * @param num number to set fuel level to
+    */
     public void setFuelLevel(int num)
     {
         fuelLevel = num;
@@ -55,10 +58,21 @@ public abstract class Car
      */
     public boolean isEmpty()
     {
-        if (fuelLevel <= 0)
-            return true;
+        if (getAppearance() == 'V')
+        {
+            if (fuelLevel < 6)
+                return true;
+            else
+                return false;
+        }
         else
-            return false;
+        {
+            if (fuelLevel < 4)
+                return true;
+            else
+                return false;
+        }
+        
     }
 
     /** Consume fuel by reducing fuel level.
@@ -75,13 +89,22 @@ public abstract class Car
         return appearance;
     }
     
+    /** Constructor: initilize the appearance and fuel level
+     * @return name and fuel remaining
+    */
     public final String toString() 
     {
         return name + ": " + fuelLevel;
     }
 
+    /** Constructor: initilize the appearance and fuel level
+     * @param val value corresponding to weather condition that affects car
+    */
     public abstract void setCarConditions(int val);
 
+    /** Constructor: initilize the appearance and fuel level
+     * @param character indicating the selection made by user
+    */
     public abstract void setSelection(char ch);
     
     /** An abstract method move() to be defined by specific car model

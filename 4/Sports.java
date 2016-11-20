@@ -28,24 +28,28 @@ public class Sports extends Car
     public Sports()
     {
         super('P', "Sports");
-        char appearance;
-        String name;
-        int fuelLevel;
     }
 
+    /** Sets selection of user
+    */
     public void setSelection(char charToBeSet)
     {
         selection = charToBeSet;
     }
 
+    /** returns selection of user
+     * @return selection the character indicating the driving mode the user wants
+    */
     public char getSelection()
     {
         return selection;
     }
 
+    /** Displays options that the user has with the car
+    */
     public void displayOptions()
     {
-        System.out.println("=== Sportscar driving options ===");
+        System.out.println("=== Sports car driving options ===");
          if (isOverheated())
              System.out.println("WARNING: car is overheated.");
          System.out.println("(c)ool off"); //doesn't consume any fuel
@@ -54,6 +58,9 @@ public class Sports extends Car
          System.out.print("Enter selection: ");
     }
 
+    /** Indicates whether the car is overheated
+     * bool indicates whether the car is overheated
+    */
     public boolean isOverheated()
     {
         if (overheated == true)
@@ -62,13 +69,15 @@ public class Sports extends Car
             return false;
     }
 
+    /** returns a corresponding number of moves or move code based on car's conditions and user indication
+    */
     public int processOption(char selection)
     {//if there is gas then the options will matter. 
         if (isEmpty() == false)
         {
             if (selection == 'q')
             {
-                return 78;
+                return 78; //code indicating user quit
             }
             else if (selection == 'c')
             {
@@ -77,11 +86,11 @@ public class Sports extends Car
             }
             else if (selection == 'd' && overheated == false)
             {
-                return 4;
+                return 4; //car can move 4 km if not overheated and regular driving mode
             }
             else if (selection == 'd' && overheated == true)
             {
-                return 1;
+                return 1; //car can move 1km if overheated in reg driving mode
             }
             else
                 return 22;
@@ -94,12 +103,17 @@ public class Sports extends Car
             return 99;   //means out of gas         
     }
 
+    /** returns the move code
+    */
     public int move()
     {
         return processOption(selection);//selection is updated in the game file based on the user's inputs in keyboard
         //the selection is checked against the existing possibilities which already display the corresponding number of moves.
     }
     
+    /** Sets condition of car i.e. if it is overheated
+     * @param value indicating track condition
+    */
     public void setCarConditions(int value)
     {
         if (value == 2)
@@ -108,6 +122,8 @@ public class Sports extends Car
         }
     }
 
+    /** Consumes fuel for corresponding move code
+    */
     public void consumeFuel()
     {
         if (getFuelLevel() > 0)

@@ -42,10 +42,10 @@ public class Game
         Track raceTrack = new Track();//make track
         raceTrack.setCars();//populate the cars array with suv and sports
         Random randomNumber = new Random(Long.parseLong(args[0]));
-        while (raceTrack.getStatus() == false)
+        while (raceTrack.getStatus() == false) //while loop for the rounds
         {
-            raceTrack.print_round(round_number);
-            round_number++;
+            raceTrack.print_round(round_number); //prints round number or game over
+            round_number++;// increments the round number for the next loop
             int randomNum = randomNumber.nextInt(3);
             if (randomNum == 0)
                 raceTrack.setCondition(0);
@@ -53,70 +53,74 @@ public class Game
                 raceTrack.setCondition(1);
             else 
                 raceTrack.setCondition(2); //Sets the condition of the track for that round
-            raceTrack.display();
+            raceTrack.display();//dsplays the current track with position of each car
 
-            for (int i = 0; i < 2; i++) //for loop to cycle between the two cars
+            if (raceTrack.getStatus() == false) //if game isn't over
             {
-                if (raceTrack.getStatus() == true) //status of the match i.e. finished or not
+                for (int i = 0; i < 2; i++) //for loop to cycle between the two cars
                 {
-                    break;
-                }
-                //update the car based on track conditions
-                switch(raceTrack.getCondition())
-                {
-                case BLIZZARD:
-                    raceTrack.cars[i].setCarConditions(1);
-                    break;
-                case HEATWAVE:
-                    raceTrack.cars[i].setCarConditions(2);
-                    break;
-                default:
-                    System.out.print("");
+                    //update the car based on track conditions
+                    switch(raceTrack.getCondition())
+                    {
+                    case BLIZZARD:
+                        raceTrack.cars[i].setCarConditions(1);
+                        break;
+                    case HEATWAVE:
+                        raceTrack.cars[i].setCarConditions(2);
+                        break;
+                    default:
+                        raceTrack.cars[i].setCarConditions(3);
 
-                }
-                if (raceTrack.cars[0].isEmpty() && i == 0)
-                {
-                    raceTrack.moveCar1(99);
-                    continue;
-                }
-                else if (raceTrack.cars[1].isEmpty() && i == 1)
-                {
-                    raceTrack.moveCar2(99);
-                    continue;
-                }
-                raceTrack.cars[i].displayOptions();
-                selection = keyboard.next().charAt(0);
-                raceTrack.cars[i].setSelection(selection);
-                // raceTrack.cars[i].processOption(selection);//process selection should take care of consuming fuel if there is any fuel
-                if (i == 0)
-                {
-                    raceTrack.moveCar1(raceTrack.cars[i].move()); //skips if car has no gas, updates finished and updates status.
-                    raceTrack.cars[i].consumeFuel();
-                    System.out.println(raceTrack.cars[i].toString());//process selection should take care of consuming fuel if there is any fuel
-                    if (raceTrack.getStatus() == true) //status of the match i.e. finished or not
+                    }
+
+                    if (raceTrack.cars[0].isEmpty() && i == 0)//no gas then let the next car move
                     {
-                        raceTrack.print_round(round_number);
-                        break;
-                    }    
-                }
-                else
-                {
-                    raceTrack.moveCar2(raceTrack.cars[i].move());//skips the car if it has run out of gas.
-                    raceTrack.cars[i].consumeFuel();
-                    System.out.println(raceTrack.cars[i].toString());//process selection should take care of consuming fuel if there is any fuel
-                    if (raceTrack.getStatus() == true) //status of the match i.e. finished or not
+                        raceTrack.moveCar1(99);
+                        continue;
+                    }
+                    else if (raceTrack.cars[1].isEmpty() && i == 1) //no then the for loop ends for this iteration
                     {
-                        raceTrack.print_round(round_number);
-                        break;
+                        raceTrack.moveCar2(99);
+                        continue;
+                    }
+                    raceTrack.cars[i].displayOptions(); //display options available for that car
+                    selection = keyboard.next().charAt(0); //get user input
+                    raceTrack.cars[i].setSelection(selection); //set user input for that car
+                    if (i == 0) //hard coded for SUV in spot 0
+                    {
+                        raceTrack.moveCar1(raceTrack.cars[i].move()); //skips if car has no gas, updates finished and updates status.
+                         if (raceTrack.getStatus() == true) //if they quit then finished is true
+                        {
+                            raceTrack.print_round(round_number);
+                            raceTrack.display();
+                            break;//breaks loop and other car doesn't get a turn.
+                        }
+                        raceTrack.cars[i].consumeFuel(); //consume fuel
+                        System.out.println(raceTrack.cars[i].toString());//output how much fuel is left for the car
+                    }
+                    else //same thing for the second car
+                    {
+                        raceTrack.moveCar2(raceTrack.cars[i].move());//skips the car if it has run out of gas.
+                         if (raceTrack.getStatus() == true) //if they quit then finished is true
+                        {
+                            raceTrack.print_round(round_number);
+                            raceTrack.display();
+                            break;
+                        }
+                        raceTrack.cars[i].consumeFuel();
+                        System.out.println(raceTrack.cars[i].toString());//process selection should take care of consuming fuel if there is any fuel
                     }
                 }
-                raceTrack.updateStatus();//check for win condition/quit condition
-                if (raceTrack.getStatus() == true)
+                raceTrack.updateStatus(); //check if game has ended
+                if (raceTrack.getStatus() == true) //if game ended then print game over etc.
                 {
                     raceTrack.print_round(round_number);
                     raceTrack.display();
+                    break;
                 }
             }
+            else //if game is already over and somehow it entered this loop
+                break; //stop the loop
         }    
     }
 }

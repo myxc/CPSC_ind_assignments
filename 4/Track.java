@@ -26,7 +26,7 @@ public class Track
     //
 
     /** Create the track and place the car at the beginning of a track to start the race.
-     * @param aCar The car to be placed.
+     * cars are hard coded because according to TA there's no case where cars are in different orders or anything.
      */
     public Track()
     {
@@ -41,17 +41,24 @@ public class Track
         finished = false;
     }
 
+    /** Sets car array with actual cars
+    */
     public void setCars()
     {
         cars[0] = new SUV(); //Car 1 is SUV, car 2 is Sports Car
         cars[1] = new Sports();
     }
 
+    /** returns weather condition
+     * @return condition weather condition
+    */
     public TrackCondition getCondition()
     {
         return condition;
     }
 
+    /** sets the weather condition according to random algo
+    */
     public void setCondition(int trackCond)
     {
         if (trackCond == 0)
@@ -66,14 +73,19 @@ public class Track
             condition = TrackCondition.NORMAL;
     }
 
+    /** returns status of game
+     * @return status of the game true for finished game and false otherwise
+    */
     public boolean getStatus()
     {
         return finished;
     }
 
+    /** Updates the status of the game based on whether cars reached finish line this round or if they quit
+    */
     public void updateStatus()
     {
-        if (locations[0] == 25 || locations[1] == 25) //if either of them reaches then checkWin returns true
+        if (locations[0] == 24 || locations[1] == 24) //if either of them reaches then checkWin returns true
         {
             finished = true;
         }
@@ -84,6 +96,9 @@ public class Track
         }
     }
 
+    /** prints the round number or game over if the game is finished
+     * @param round number which increments each round
+    */
     public void print_round(int round_number)
     {
      if (finished == false)
@@ -96,50 +111,48 @@ public class Track
      }   
     }
 
-    //need to make method that moves cars and then update game to finis this.
+    /** Moves the first car which is assumed to be and hard coded as SUV as TA indicated it will be
+     * @param km to move the car
+    */
     public void moveCar1(int num_km)
     {//this method updates the location of the car, and if the user quit then it updates finished token.
         if (num_km == 78)
         {
-            System.out.println("Move: 0");
             finished = true;
         }
         else if (num_km == 99)
         {
             System.out.println("=== Skipping SUV (out of fuel) ===");
         }
-        else if (locations[0] + num_km > 25)
+        else if (locations[0] + num_km > 24)
         {
             System.out.println("Move: " + num_km);
-            locations[0] = 25;
-            updateStatus();
-
+            locations[0] = 24;
         }
         else
         {
             System.out.println("Move: " + num_km);
             locations[0] += num_km;
-            updateStatus();
-
         }
     }
 
+    /** Moves the second car which is assumed to be and hard coded as Sports car as TA indicated it will be
+     * @param km to move the car
+    */
     public void moveCar2(int num_km)
     {
         if (num_km == 78)
         {
-            System.out.println("Move: 0");
             finished = true;
         }
         else if (num_km == 99)
         {
             System.out.println("=== Skipping Sports (out of fuel) ===");
         }
-        else if (locations[1] + num_km > 25)
+        else if (locations[1] + num_km > 24)
         {
             System.out.println("Move: " + num_km);
-            locations[1] = 25;
-            updateStatus();
+            locations[1] = 24;
         }
         else
         {
