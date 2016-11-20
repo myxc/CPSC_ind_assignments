@@ -106,7 +106,6 @@ public class Track
         }
         else if (num_km == 99)
         {
-            System.out.println("Move: 0");
             System.out.println("=== Skipping SUV (out of fuel) ===");
         }
         else if (locations[0] + num_km > 25)
@@ -134,7 +133,6 @@ public class Track
         }
         else if (num_km == 99)
         {
-            System.out.println("Move: 0");
             System.out.println("=== Skipping Sports (out of fuel) ===");
         }
         else if (locations[1] + num_km > 25)

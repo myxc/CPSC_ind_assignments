@@ -74,7 +74,16 @@ public class Game
                     System.out.print("");
 
                 }
-
+                if (raceTrack.cars[0].isEmpty() && i == 0)
+                {
+                    raceTrack.moveCar1(99);
+                    continue;
+                }
+                else if (raceTrack.cars[1].isEmpty() && i == 1)
+                {
+                    raceTrack.moveCar2(99);
+                    continue;
+                }
                 raceTrack.cars[i].displayOptions();
                 selection = keyboard.next().charAt(0);
                 raceTrack.cars[i].setSelection(selection);
@@ -102,6 +111,11 @@ public class Game
                     }
                 }
                 raceTrack.updateStatus();//check for win condition/quit condition
+                if (raceTrack.getStatus() == true)
+                {
+                    raceTrack.print_round(round_number);
+                    raceTrack.display();
+                }
             }
         }    
     }

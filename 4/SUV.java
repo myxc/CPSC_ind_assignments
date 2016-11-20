@@ -94,7 +94,6 @@ public class SUV extends Car
         if (value == 1)
         {
             blizzard = true;
-            System.out.println("set blizzard to true");
         }
         else
             blizzard = false;

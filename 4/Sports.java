@@ -106,8 +106,6 @@ public class Sports extends Car
         {
             overheated = true;
         }
-        else
-            System.out.println("not heatwave");
     }
 
     public void consumeFuel()
